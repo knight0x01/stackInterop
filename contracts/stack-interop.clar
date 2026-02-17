@@ -304,6 +304,11 @@
     (ok (var-get max-identities-limit))
 )
 
+;; @desc Returns the current verification cooldown period.
+(define-read-only (get-verification-cooldown)
+    (ok (var-get verification-cooldown-limit))
+)
+
 ;; @desc Returns the reputation score and last update for a given user.
 (define-read-only (get-reputation (user principal))
     (map-get? identity-reputation user)
