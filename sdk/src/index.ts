@@ -114,4 +114,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchAuditLogEntry(index: number): Promise<any> {
+        const options = this.getReadOnlyOptions("get-audit-log-entry", [Cl.uint(index)], DEFAULT_CONTRACT_ADDRESS);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
