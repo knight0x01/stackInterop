@@ -89,4 +89,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchPausedStatus(): Promise<boolean> {
+        const options = this.getReadOnlyOptions("get-paused-status", [], DEFAULT_CONTRACT_ADDRESS);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
