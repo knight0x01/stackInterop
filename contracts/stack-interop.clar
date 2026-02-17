@@ -593,6 +593,13 @@
     )
 )
 
+;; @desc Checks if a user has reached the maximum reputation score.
+;; @param user: The principal to check.
+;; @returns bool: True if score is >= MAX-REPUTATION-SCORE.
+(define-private (is-max-reputation (user principal))
+    (>= (get-user-reputation-internal user) MAX-REPUTATION-SCORE)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
