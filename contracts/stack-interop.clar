@@ -328,6 +328,9 @@
                 last-updated: block-height 
             }
         )
+
+        ;; Record the action in the audit log
+        (log-admin-action "Update User Reputation")
         (ok true)
     )
 )
