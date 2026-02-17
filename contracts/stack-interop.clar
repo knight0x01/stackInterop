@@ -1,6 +1,12 @@
 ;; title: stack-interop
 ;; summary: A cross-chain identity registry for linking Stacks principals to Bitcoin addresses.
-
+;; description: 
+;; This contract provides a secure and auditable way to link Stacks principals 
+;; with Bitcoin addresses. It includes a tiered identity system, reputation tracking, 
+;; and a comprehensive administrative audit log.
+;;
+;; Phase 1: Foundational Constants & Maps - Completed.
+;; Next: Phase 2: Granular Logic Implementation.
 ;; constants
 ;; Error code u100: Standard authorization error
 (define-constant ERR-NOT-AUTHORIZED (err u100))
