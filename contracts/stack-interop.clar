@@ -466,6 +466,13 @@
     true
 )
 
+;; @desc Checks if a given Stacks principal is already in the registry.
+;; @param user: The principal to check.
+;; @returns bool: True if linked, false otherwise.
+(define-private (is-principal-linked (user principal))
+    (is-some (map-get? identity-registry user))
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
