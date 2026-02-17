@@ -1,5 +1,5 @@
 import {
-    callReadOnlyFunction,
+    fetchCallReadOnlyFunction as callReadOnlyFunction,
     cvToValue,
     Cl,
     ReadOnlyFunctionOptions
