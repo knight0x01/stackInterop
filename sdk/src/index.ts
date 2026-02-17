@@ -7,3 +7,15 @@ export interface StackInteropConfig {
     contractName: string;
     network?: "mainnet" | "testnet" | "devnet";
 }
+
+export class StackInteropSDK {
+    private config: StackInteropConfig;
+
+    constructor(config?: Partial<StackInteropConfig>) {
+        this.config = {
+            contractAddress: config?.contractAddress || DEFAULT_CONTRACT_ADDRESS,
+            contractName: config?.contractName || DEFAULT_CONTRACT_NAME,
+            network: config?.network || "devnet",
+        };
+    }
+}
