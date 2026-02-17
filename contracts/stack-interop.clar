@@ -538,6 +538,13 @@
     )
 )
 
+;; @desc Checks if the provided principal is the current contract owner.
+;; @param caller: The principal to check.
+;; @returns bool: True if the principal is the owner.
+(define-private (is-contract-owner (caller principal))
+    (is-eq caller (var-get contract-owner-var))
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
