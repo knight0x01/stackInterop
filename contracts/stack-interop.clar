@@ -31,6 +31,10 @@
 ;; Error code u107: The registry has reached its maximum allowed capacity
 (define-constant ERR-LIMIT-REACHED (err u1007))
 
+;; Audit log constants
+;; Maximum number of audit log entries to store (for pruning logic)
+(define-constant MAX-AUDIT-LOG-ENTRIES u1000)
+
 ;; Scaling constants
 ;; Default maximum number of identities allowed in the registry
 (define-constant DEFAULT-MAX-IDENTITIES u10000)
