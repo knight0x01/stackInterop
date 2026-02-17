@@ -59,4 +59,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchIdentity(userAddress: string): Promise<any> {
+        const options = this.getReadOnlyOptions("get-identity", [Cl.principal(userAddress)], userAddress);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
