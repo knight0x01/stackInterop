@@ -64,6 +64,11 @@
 (define-constant LEVEL-SILVER u2)
 (define-constant LEVEL-GOLD u3)
 
+;; Minimum reputation scores for levels
+(define-constant REPUTATION-BRONZE-MIN u100)
+(define-constant REPUTATION-SILVER-MIN u250)
+(define-constant REPUTATION-GOLD-MIN u500)
+
 ;; Timing constants
 ;; Number of blocks to wait before a user can re-verify or update their identity
 (define-constant DEFAULT-VERIFICATION-COOLDOWN u144) ;; ~24 hours on Bitcoin timing
