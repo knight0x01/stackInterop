@@ -350,6 +350,9 @@
                 granted-at: block-height 
             }
         )
+
+        ;; Record the action in the audit log
+        (log-admin-action "Update User Identity Tier")
         (ok true)
     )
 )
