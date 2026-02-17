@@ -18,4 +18,8 @@ export class StackInteropSDK {
             network: config?.network || "devnet",
         };
     }
+
+    public getContractIdentifier(): string {
+        return `${this.config.contractAddress}.${this.config.contractName}`;
+    }
 }
