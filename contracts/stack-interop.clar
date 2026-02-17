@@ -394,6 +394,17 @@
     (unwrap-panic (as-max-len? (slice? btc-pubkey u0 u1) u1))
 )
 
+;; @desc Validates if the Bitcoin public key length is correct (33 or 65 bytes).
+;; @param btc-pubkey: The raw public key buffer.
+;; @returns bool: True if valid, false otherwise.
+(define-private (is-valid-pubkey-len (btc-pubkey (buff 65)))
+    (let (
+        (pub-len (len btc-pubkey))
+    )
+        (or (is-eq pub-len PUBKEY-COMPRESSED-LEN) (is-eq pub-len PUBKEY-UNCOMPRESSED-LEN))
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
