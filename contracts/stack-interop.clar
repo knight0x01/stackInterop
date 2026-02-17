@@ -405,6 +405,13 @@
     )
 )
 
+;; @desc Checks if the provided public key is in compressed format (33 bytes).
+;; @param btc-pubkey: The raw public key buffer.
+;; @returns bool: True if compressed, false otherwise.
+(define-private (is-compressed-pubkey (btc-pubkey (buff 65)))
+    (is-eq (len btc-pubkey) PUBKEY-COMPRESSED-LEN)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
