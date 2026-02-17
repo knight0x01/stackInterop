@@ -658,9 +658,9 @@
 
 ;; @desc Checks if an identity hasn't been updated for a significant time.
 ;; @param user: The principal to check.
-;; @returns bool: True if current height - updated-at > 10000 blocks.
+;; @returns bool: True if current height - updated-at > STALE-IDENTITY-THRESHOLD.
 (define-private (is-identity-stale (user principal))
-    (> (get-block-diff (get-verification-height user)) u10000)
+    (> (get-block-diff (get-verification-height user)) STALE-IDENTITY-THRESHOLD)
 )
 
 ;; @desc Records an administrative action to the audit log.
