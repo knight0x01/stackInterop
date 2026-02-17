@@ -140,4 +140,13 @@ export class StackInteropSDK {
             ],
         };
     }
+
+    public buildRenewIdentityOptions() {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "renew-identity",
+            functionArgs: [],
+        };
+    }
 }
