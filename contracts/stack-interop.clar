@@ -39,6 +39,19 @@
 ;; The network identifier (mocking for interoperability experiments)
 (define-constant NETWORK-ID "stacks-mainnet")
 
+;; Verification parameter constants
+;; Standard length of a Bitcoin compressed public key
+(define-constant PUBKEY-COMPRESSED-LEN u33)
+
+;; Standard length of a Bitcoin uncompressed public key
+(define-constant PUBKEY-UNCOMPRESSED-LEN u65)
+
+;; Standard length of a Bitcoin message signature (compact)
+(define-constant SIGNATURE-LEN u65)
+
+;; Standard length of a SHA-256 message hash
+(define-constant HASH-LEN u32)
+
 ;; data maps
 ;; Maps a Stacks principal to a Bitcoin address (stored as a buffer)
 (define-map identity-registry principal (buff 20))
