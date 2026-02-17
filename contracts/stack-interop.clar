@@ -225,6 +225,25 @@
     )
 )
 
+;; @desc Updates the reputation score for a specific user.
+;; @param user: The principal of the user.
+;; @param new-score: The new reputation score.
+(define-public (update-reputation (user principal) (new-score uint))
+    (begin
+        ;; Only the owner can manually adjust reputation
+        (asserts! (is-eq tx-sender (var-get contract-owner-var)) ERR-NOT-OWNER)
+        
+        ;; Update the mapping
+        (map-set identity-reputation user 
+            { 
+                score: new-score, 
+                last-updated: block-height 
+            }
+        )
+        (ok true)
+    )
+)
+
 ;; private functions
 
 ;; @desc Helper to check if the contract is in a paused state.
