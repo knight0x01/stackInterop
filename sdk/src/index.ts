@@ -65,4 +65,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchCompactIdentityData(userAddress: string): Promise<any> {
+        const options = this.getReadOnlyOptions("get-compact-identity-data", [Cl.principal(userAddress)], userAddress);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
