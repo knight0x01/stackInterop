@@ -514,6 +514,14 @@
     (>= (get-user-reputation-internal user) HIGH-REPUTATION-THRESHOLD)
 )
 
+;; @desc Checks if a user is at or above a specific verification tier.
+;; @param user: The principal to check.
+;; @param min-tier: The minimum required tier.
+;; @returns bool: True if the user's tier is >= min-tier.
+(define-private (is-in-tier (user principal) (min-tier uint))
+    (>= (get-user-tier-internal user) min-tier)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
