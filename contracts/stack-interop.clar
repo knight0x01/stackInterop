@@ -615,6 +615,12 @@
     )
 )
 
+;; @desc Checks if the global verification window is open.
+;; @returns bool: True if verification-window-open is true.
+(define-private (is-within-window)
+    (var-get verification-window-open)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
