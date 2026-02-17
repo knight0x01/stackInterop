@@ -226,3 +226,8 @@
 (define-read-only (get-paused-status)
     (ok (var-get is-registry-paused))
 )
+
+;; @desc Returns the maximum number of identities allowed.
+(define-read-only (get-max-identities)
+    (ok (var-get max-identities-limit))
+)
