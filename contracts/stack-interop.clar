@@ -827,6 +827,12 @@
     (get-user-reputation-internal tx-sender)
 )
 
+;; @desc Returns the verification tier of the current transaction sender.
+;; @returns uint: The tier or TIER-0 if not registered.
+(define-private (get-sender-tier)
+    (get-user-tier-internal tx-sender)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
