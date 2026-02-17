@@ -72,6 +72,9 @@
 ;; Cooldown period for identity operations (in blocks)
 (define-data-var verification-cooldown-limit uint DEFAULT-VERIFICATION-COOLDOWN)
 
+;; Whether the verification window is currently open for specific tiers
+(define-data-var verification-window-open bool true)
+
 ;; Metadata constants
 ;; The semantic version of the contract
 (define-constant CONTRACT-VERSION "0.1.0")
