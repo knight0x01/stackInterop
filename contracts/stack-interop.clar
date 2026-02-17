@@ -195,3 +195,8 @@
 (define-read-only (get-last-update-height)
     (ok (var-get last-registry-update-height))
 )
+
+;; @desc Returns whether the registry is currently paused.
+(define-read-only (get-paused-status)
+    (ok (var-get is-registry-paused))
+)
