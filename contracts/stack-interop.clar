@@ -235,6 +235,19 @@
     )
 )
 
+;; @desc Updates the verification cooldown period.
+;; @param new-cooldown: The new cooldown in blocks.
+(define-public (set-verification-cooldown (new-cooldown uint))
+    (begin
+        ;; Only the owner can adjust timing parameters
+        (asserts! (is-eq tx-sender (var-get contract-owner-var)) ERR-NOT-OWNER)
+        
+        ;; Update the cooldown
+        (var-set verification-cooldown-limit new-cooldown)
+        (ok true)
+    )
+)
+
 ;; @desc Updates the reputation score for a specific user.
 ;; @param user: The principal of the user.
 ;; @param new-score: The new reputation score.
