@@ -37,4 +37,14 @@ export class StackInteropSDK {
     public getConfig(): StackInteropConfig {
         return { ...this.config };
     }
+
+    private getReadOnlyOptions(functionName: string, functionArgs: any[], senderAddress: string): ReadOnlyFunctionOptions {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName,
+            functionArgs,
+            senderAddress,
+        };
+    }
 }
