@@ -120,4 +120,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchAuditLogIndex(): Promise<number> {
+        const options = this.getReadOnlyOptions("get-audit-log-index", [], DEFAULT_CONTRACT_ADDRESS);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
