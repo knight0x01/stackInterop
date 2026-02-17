@@ -441,6 +441,13 @@
     (hash160 btc-pubkey)
 )
 
+;; @desc Validates if the Bitcoin signature length is correct (65 bytes).
+;; @param signature: The raw signature buffer.
+;; @returns bool: True if valid, false otherwise.
+(define-private (is-valid-signature-len (signature (buff 65)))
+    (is-eq (len signature) SIGNATURE-LEN)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
