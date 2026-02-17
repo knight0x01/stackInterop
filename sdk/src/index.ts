@@ -71,4 +71,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async isIdentityValid(userAddress: string): Promise<boolean> {
+        const options = this.getReadOnlyOptions("is-identity-valid", [Cl.principal(userAddress)], userAddress);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
