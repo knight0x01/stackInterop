@@ -732,6 +732,17 @@
     (>= (get-user-reputation-internal user) REPUTATION-BRONZE-MIN)
 )
 
+;; @desc Checks if an identity has been active since a specific block height.
+;; @param user: The principal to check.
+;; @param height: The block height to check against.
+;; @returns bool: True if linked-at <= height.
+(define-private (is-identity-active-since (user principal) (height uint))
+    (match (map-get? identity-registry user)
+        identity (<= (get linked-at identity) height)
+        false
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
