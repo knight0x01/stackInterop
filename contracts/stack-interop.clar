@@ -653,6 +653,13 @@
     (>= (get-user-reputation-internal user) required-score)
 )
 
+;; @desc Checks if an identity hasn't been updated for a significant time.
+;; @param user: The principal to check.
+;; @returns bool: True if current height - updated-at > 10000 blocks.
+(define-private (is-identity-stale (user principal))
+    (> (get-block-diff (get-verification-height user)) u10000)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
