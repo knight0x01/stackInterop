@@ -600,6 +600,21 @@
     (>= (get-user-reputation-internal user) MAX-REPUTATION-SCORE)
 )
 
+;; @desc Checks if a user is eligible for a tier upgrade based on reputation.
+;; @param user: The principal to check.
+;; @param target-tier: The tier they want to reach.
+;; @returns bool: True if reputation meets requirements for the tier.
+(define-private (is-tier-upgrade-allowed (user principal) (target-tier uint))
+    (let (
+        (current-reputation (get-user-reputation-internal user))
+    )
+        (if (is-eq target-tier TIER-2)
+            (>= current-reputation HIGH-REPUTATION-THRESHOLD)
+            true
+        )
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
