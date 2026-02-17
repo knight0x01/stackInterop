@@ -621,6 +621,13 @@
     (var-get verification-window-open)
 )
 
+;; @desc Checks if the user's Bitcoin address hash is already verified.
+;; @param user: The principal to check.
+;; @returns bool: True if the address has been linked successfully.
+(define-private (is-address-verified (user principal))
+    (is-some (get btc-hash (map-get? identity-registry user)))
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
