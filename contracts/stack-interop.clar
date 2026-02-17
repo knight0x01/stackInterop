@@ -713,6 +713,13 @@
     (>= (get-user-reputation-internal user) u500)
 )
 
+;; @desc Checks if a user is eligible for Silver reputation level.
+;; @param user: The principal to check.
+;; @returns bool: True if score >= 250.
+(define-private (is-eligible-for-silver (user principal))
+    (>= (get-user-reputation-internal user) u250)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
