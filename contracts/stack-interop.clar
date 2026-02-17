@@ -507,6 +507,13 @@
     )
 )
 
+;; @desc Checks if a user meets the threshold for high reputation.
+;; @param user: The principal to check.
+;; @returns bool: True if the user's score is >= HIGH-REPUTATION-THRESHOLD.
+(define-private (is-high-reputation (user principal))
+    (>= (get-user-reputation-internal user) HIGH-REPUTATION-THRESHOLD)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
