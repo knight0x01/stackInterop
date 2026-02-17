@@ -448,6 +448,13 @@
     (is-eq (len signature) SIGNATURE-LEN)
 )
 
+;; @desc Validates if the message hash length is correct (32 bytes).
+;; @param message-hash: The raw message hash buffer.
+;; @returns bool: True if valid, false otherwise.
+(define-private (is-valid-message-hash-len (message-hash (buff 32)))
+    (is-eq (len message-hash) HASH-LEN)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
