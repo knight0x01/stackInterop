@@ -99,6 +99,13 @@
                 updated-at: current-height 
             }
         )
+
+        ;; Increment total identity count
+        (var-set total-identities-count (+ (var-get total-identities-count) u1))
+
+        ;; Record global registry update height
+        (var-set last-registry-update-height current-height)
+        
         (ok true)
     )
 )
