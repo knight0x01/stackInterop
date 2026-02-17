@@ -43,7 +43,7 @@ describe("Identity Registry Tests", () => {
       wallet1
     );
 
-    expect(identity).toBeSome();
+    expect(identity).toBeDefined();
   });
 
   it("prevents linking the same principal twice", () => {
