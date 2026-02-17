@@ -149,4 +149,13 @@ export class StackInteropSDK {
             functionArgs: [],
         };
     }
+
+    public buildAdvanceTierOptions(targetTier: number) {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "advance-tier",
+            functionArgs: [Cl.uint(targetTier)],
+        };
+    }
 }
