@@ -840,6 +840,12 @@
     (is-in-tier tx-sender min-tier)
 )
 
+;; @desc Checks if the current transaction sender is the contract owner.
+;; @returns bool: True if tx-sender is the owner.
+(define-private (is-sender-contract-owner)
+    (is-contract-owner tx-sender)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
