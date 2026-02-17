@@ -357,6 +357,11 @@
     (ok (var-get verification-cooldown-limit))
 )
 
+;; @desc Returns the status of the verification window.
+(define-read-only (get-verification-window-status)
+    (ok (var-get verification-window-open))
+)
+
 ;; @desc Returns the reputation score and last update for a given user.
 (define-read-only (get-reputation (user principal))
     (map-get? identity-reputation user)
