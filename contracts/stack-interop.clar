@@ -49,6 +49,9 @@
 ;; Initial reputation score given to newly linked identities
 (define-constant DEFAULT-REPUTATION-SCORE u10)
 
+;; Threshold for considering a user as having "high reputation"
+(define-constant HIGH-REPUTATION-THRESHOLD u100)
+
 ;; Timing constants
 ;; Number of blocks to wait before a user can re-verify or update their identity
 (define-constant DEFAULT-VERIFICATION-COOLDOWN u144) ;; ~24 hours on Bitcoin timing
