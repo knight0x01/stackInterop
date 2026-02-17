@@ -264,6 +264,19 @@
     )
 )
 
+;; @desc Toggles the verification window status.
+;; @param status: The new window status (bool).
+(define-public (set-verification-window-status (status bool))
+    (begin
+        ;; Only the owner can control verification windows
+        (asserts! (is-eq tx-sender (var-get contract-owner-var)) ERR-NOT-OWNER)
+        
+        ;; Update the status
+        (var-set verification-window-open status)
+        (ok true)
+    )
+)
+
 ;; @desc Updates the reputation score for a specific user.
 ;; @param user: The principal of the user.
 ;; @param new-score: The new reputation score.
