@@ -127,4 +127,17 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public buildLinkAddressOptions(btcPubkey: string, signature: string, messageHash: string) {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "link-address",
+            functionArgs: [
+                Cl.bufferFromHex(btcPubkey),
+                Cl.bufferFromHex(signature),
+                Cl.bufferFromHex(messageHash)
+            ],
+        };
+    }
 }
