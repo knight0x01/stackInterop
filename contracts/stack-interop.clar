@@ -821,6 +821,12 @@
     (is-principal-linked tx-sender)
 )
 
+;; @desc Returns the reputation score of the current transaction sender.
+;; @returns uint: The score or 0 if not linked.
+(define-private (get-sender-reputation)
+    (get-user-reputation-internal tx-sender)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
