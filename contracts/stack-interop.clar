@@ -757,6 +757,13 @@
     (<= (get-verification-age user) u1440)
 )
 
+;; @desc Checks if a given block height is in the future relative to the current block.
+;; @param height: The block height to check.
+;; @returns bool: True if height > current block-height.
+(define-private (is-block-in-future (height uint))
+    (> height block-height)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
