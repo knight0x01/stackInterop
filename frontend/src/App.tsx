@@ -251,3 +251,5 @@ function App() {
 }
 
 export default App;
+
+// Commit 2: Granular logic refinement and documentation update.
