@@ -271,3 +271,8 @@
 (define-read-only (get-max-identities)
     (ok (var-get max-identities-limit))
 )
+
+;; @desc Returns the reputation score and last update for a given user.
+(define-read-only (get-reputation (user principal))
+    (map-get? identity-reputation user)
+)
