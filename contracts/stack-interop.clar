@@ -36,6 +36,10 @@
 ;; Last updated block height for the entire registry
 (define-data-var last-registry-update-height uint u0)
 
+;; Emergency Switch
+;; If true, all state-changing operations are suspended
+(define-data-var is-registry-paused bool false)
+
 ;; Metadata constants
 ;; The semantic version of the contract
 (define-constant CONTRACT-VERSION "0.1.0")
