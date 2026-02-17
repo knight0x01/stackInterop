@@ -706,6 +706,13 @@
     )
 )
 
+;; @desc Checks if a user is eligible for Gold reputation level.
+;; @param user: The principal to check.
+;; @returns bool: True if score >= 500.
+(define-private (is-eligible-for-gold (user principal))
+    (>= (get-user-reputation-internal user) u500)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
