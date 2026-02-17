@@ -35,6 +35,10 @@
 ;; Default maximum number of identities allowed in the registry
 (define-constant DEFAULT-MAX-IDENTITIES u10000)
 
+;; Reputation constants
+;; Initial reputation score given to newly linked identities
+(define-constant DEFAULT-REPUTATION-SCORE u10)
+
 ;; Data variables
 ;; Store the current contract owner principal
 (define-data-var contract-owner-var principal INITIAL-OWNER)
