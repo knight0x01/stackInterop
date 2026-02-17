@@ -111,6 +111,15 @@
     }
 )
 
+;; Maps a Stacks principal to their current identity verification tier.
+;; tier: The numeric level of verification (0, 1, 2, etc.).
+(define-map identity-tiers principal 
+    { 
+        tier: uint, 
+        granted-at: uint 
+    }
+)
+
 ;; Maps a Stacks principal to their calculated reputation score.
 ;; The score is used to determine privileges in the ecosystem.
 (define-map identity-reputation principal 
