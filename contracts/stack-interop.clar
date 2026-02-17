@@ -277,6 +277,9 @@
         
         ;; Update the limit
         (var-set max-identities-limit new-limit)
+
+        ;; Record the action in the audit log
+        (log-admin-action "Update Max Identities Limit")
         (ok true)
     )
 )
