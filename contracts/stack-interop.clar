@@ -50,6 +50,9 @@
 ;; If true, all state-changing operations are suspended
 (define-data-var is-registry-paused bool false)
 
+;; Maximum number of identities allowed in the registry
+(define-data-var max-identities-limit uint DEFAULT-MAX-IDENTITIES)
+
 ;; Metadata constants
 ;; The semantic version of the contract
 (define-constant CONTRACT-VERSION "0.1.0")
