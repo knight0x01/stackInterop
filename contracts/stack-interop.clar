@@ -69,6 +69,9 @@
 (define-constant REPUTATION-SILVER-MIN u250)
 (define-constant REPUTATION-GOLD-MIN u500)
 
+;; Reputation increment step
+(define-constant REPUTATION-STEP u10)
+
 ;; Timing constants
 ;; Number of blocks to wait before a user can re-verify or update their identity
 (define-constant DEFAULT-VERIFICATION-COOLDOWN u144) ;; ~24 hours on Bitcoin timing
