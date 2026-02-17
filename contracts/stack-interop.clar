@@ -720,6 +720,13 @@
     (>= (get-user-reputation-internal user) u250)
 )
 
+;; @desc Checks if a user is eligible for Bronze reputation level.
+;; @param user: The principal to check.
+;; @returns bool: True if score >= 100.
+(define-private (is-eligible-for-bronze (user principal))
+    (>= (get-user-reputation-internal user) u100)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
