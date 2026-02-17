@@ -82,6 +82,9 @@
 ;; Staleness threshold (in blocks)
 (define-constant STALE-IDENTITY-THRESHOLD u10000)
 
+;; Threshold for bypassing cooldown if identity is sufficiently old
+(define-constant COOLDOWN-BYPASS-THRESHOLD u5000)
+
 ;; Tier constants
 (define-constant TIER-0 u0) ;; Unverified or Basic
 (define-constant TIER-1 u1) ;; Verified Bitcoin Link
