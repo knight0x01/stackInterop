@@ -1,0 +1,253 @@
+import { useState, useEffect } from "react";
+import { AppConfig, UserSession, showConnect } from "@stacks/connect";
+import { StacksMocknet } from "@stacks/network";
+import {
+  Cl,
+  cvToValue,
+  fetchCallReadOnlyFunction as callReadOnlyFunction
+} from "@stacks/transactions";
+import { Wallet, Shield, Award, Activity, LogOut, CheckCircle, XCircle } from "lucide-react";
+
+// SDK Defaults (Mirroring our SDK)
+const CONTRACT_ADDRESS = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
+const CONTRACT_NAME = "stack-interop";
+
+const appConfig = new AppConfig(["store_write", "publish_data"]);
+const userSession = new UserSession({ appConfig });
+
+function App() {
+  const [userData, setUserData] = useState<any>(null);
+  const [reputation, setReputation] = useState<any>(null);
+  const [tier, setTier] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (userSession.isUserSignedIn()) {
+      setUserData(userSession.loadUserData());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userData) {
+      fetchUserData();
+    }
+  }, [userData]);
+
+  const fetchUserData = async () => {
+    if (!userData) return;
+    setIsLoading(true);
+    try {
+      const address = userData.profile.stxAddress.mainnet || userData.profile.stxAddress.testnet;
+
+      // Fetch Reputation
+      const repResult = await callReadOnlyFunction({
+        contractAddress: CONTRACT_ADDRESS,
+        contractName: CONTRACT_NAME,
+        functionName: "get-reputation",
+        functionArgs: [Cl.principal(address)],
+        network: new StacksMocknet(),
+        senderAddress: address,
+      });
+      setReputation(cvToValue(repResult));
+
+      // Fetch Tier
+      const tierResult = await callReadOnlyFunction({
+        contractAddress: CONTRACT_ADDRESS,
+        contractName: CONTRACT_NAME,
+        functionName: "get-user-tier",
+        functionArgs: [Cl.principal(address)],
+        network: new StacksMocknet(),
+        senderAddress: address,
+      });
+      setTier(cvToValue(tierResult));
+    } catch (e) {
+      console.error("Error fetching data:", e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const connectWallet = () => {
+    showConnect({
+      appDetails: {
+        name: "StackInterop Dashboard",
+        icon: window.location.origin + "/logo.png",
+      },
+      redirectTo: "/",
+      onFinish: () => {
+        setUserData(userSession.loadUserData());
+      },
+      userSession,
+    });
+  };
+
+  const logout = () => {
+    userSession.signUserOut();
+    setUserData(null);
+    setReputation(null);
+    setTier(null);
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-blue-500/30">
+      <nav className="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <div className="bg-blue-600 p-2 rounded-lg">
+              <Shield className="w-6 h-6 text-white" />
+            </div>
+            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">
+              StackInterop
+            </span>
+          </div>
+
+          {userData ? (
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-mono bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700">
+                {userData.profile.stxAddress.testnet.slice(0, 5)}...{userData.profile.stxAddress.testnet.slice(-5)}
+              </span>
+              <button
+                onClick={logout}
+                className="p-2 hover:bg-red-500/10 hover:text-red-400 rounded-full transition-colors"
+                title="Logout"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={connectWallet}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full font-medium transition-all shadow-lg shadow-blue-600/20 flex items-center gap-2 active:scale-95"
+            >
+              <Wallet className="w-4 h-4" /> Connect Wallet
+            </button>
+          )}
+        </div>
+      </nav>
+
+      <main className="max-w-6xl mx-auto px-6 py-12">
+        {!userData ? (
+          <div className="text-center py-24 bg-slate-800/40 rounded-3xl border border-slate-700/50 backdrop-blur-sm">
+            <h1 className="text-4xl font-extrabold mb-4 tracking-tight">Cross-Chain Identity & Reputation</h1>
+            <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
+              Securely link your Stacks wallet with your Bitcoin identity. Track your reputation and unlock premium network tiers.
+            </p>
+            <button
+              onClick={connectWallet}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-semibold text-lg transition-all shadow-xl shadow-blue-600/25 active:scale-95"
+            >
+              Get Started
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="md:col-span-2 space-y-8">
+              <section className="bg-slate-800/40 p-8 rounded-3xl border border-slate-700/50">
+                <div className="flex justify-between items-start mb-8">
+                  <h2 className="text-2xl font-bold flex items-center gap-2">
+                    <Activity className="w-6 h-6 text-blue-400" /> Identity Status
+                  </h2>
+                  {reputation?.["is-verified"] ? (
+                    <span className="bg-green-500/10 text-green-400 px-3 py-1 rounded-full text-xs font-bold border border-green-500/20 flex items-center gap-1.5">
+                      <CheckCircle className="w-3.5 h-3.5" /> Verified
+                    </span>
+                  ) : (
+                    <span className="bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full text-xs font-bold border border-amber-500/20 flex items-center gap-1.5">
+                      <XCircle className="w-3.5 h-3.5" /> Pending Link
+                    </span>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 gap-6">
+                  <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800">
+                    <p className="text-slate-400 text-sm mb-1">Current Tier</p>
+                    <p className="text-3xl font-black text-indigo-400">Tier {tier || 1}</p>
+                  </div>
+                  <div className="bg-slate-900/40 p-6 rounded-2xl border border-slate-800">
+                    <p className="text-slate-400 text-sm mb-1">Reputation Score</p>
+                    <p className="text-3xl font-black text-blue-400">{reputation?.score || 0}</p>
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-8 border-t border-slate-700/30">
+                  <h3 className="font-bold mb-4">Network Benefits</h3>
+                  <div className="space-y-3">
+                    {[
+                      { l: "Reduced Transaction Fees", t: 1 },
+                      { l: "Identity Renewal Access", t: 1 },
+                      { l: "Governance Voting Power", t: 2 },
+                      { l: "Priority Support Access", t: 3 }
+                    ].map((b, i) => (
+                      <div key={i} className={`flex items-center gap-3 text-sm ${tier >= b.t ? 'text-slate-200' : 'text-slate-500'}`}>
+                        <div className={`w-1.5 h-1.5 rounded-full ${tier >= b.t ? 'bg-blue-400' : 'bg-slate-700'}`} />
+                        {b.l}
+                        {tier < b.t && <span className="text-[10px] uppercase font-bold tracking-wider opacity-50 ml-auto">(Tier {b.t}+)</span>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <button className="flex items-center justify-center gap-3 bg-slate-800 hover:bg-slate-750 p-6 rounded-2xl border border-slate-700 transition-all active:scale-95 group">
+                  <Wallet className="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" />
+                  <div className="text-left">
+                    <p className="font-bold">Link Bitcoin Address</p>
+                    <p className="text-xs text-slate-400">Prove ownership of BTC</p>
+                  </div>
+                </button>
+                <button className="flex items-center justify-center gap-3 bg-slate-800 hover:bg-slate-750 p-6 rounded-2xl border border-slate-700 transition-all active:scale-95 group">
+                  <Activity className="w-5 h-5 text-indigo-400 group-hover:scale-110 transition-transform" />
+                  <div className="text-left">
+                    <p className="font-bold">Renew Identity</p>
+                    <p className="text-xs text-slate-400">Extend verification status</p>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <aside className="space-y-8">
+              <section className="bg-indigo-600/10 p-8 rounded-3xl border border-indigo-500/20 relative overflow-hidden">
+                <div className="relative z-10">
+                  <Award className="w-12 h-12 text-indigo-400 mb-6" />
+                  <h3 className="text-xl font-bold mb-3">Tier Advancement</h3>
+                  <p className="text-sm text-indigo-200/60 leading-relaxed mb-6">
+                    Increase your reputation to Tier 2 and unlock full network governance features.
+                  </p>
+                  <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition-all shadow-lg shadow-indigo-600/20">
+                    Upgrade Now
+                  </button>
+                </div>
+                <div className="absolute top-0 right-0 -translate-top-1/2 -translate-right-1/2 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl" />
+              </section>
+
+              <section className="bg-slate-800/40 p-8 rounded-3xl border border-slate-700/50">
+                <h3 className="font-bold mb-6">Recent Activity</h3>
+                <div className="space-y-6">
+                  {isLoading ? (
+                    <div className="animate-pulse space-y-4">
+                      <div className="h-4 bg-slate-700 rounded w-3/4"></div>
+                      <div className="h-4 bg-slate-700 rounded w-1/2"></div>
+                    </div>
+                  ) : (
+                    <div className="text-sm text-slate-400 italic">
+                      No recent audit logs found for your address.
+                    </div>
+                  )}
+                </div>
+              </section>
+            </aside>
+          </div>
+        )}
+      </main>
+
+      <footer className="border-t border-slate-800 mt-24 py-12">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <p className="text-slate-500 text-sm">© 2026 StackInterop Identity Protocol. Built on Stacks & Bitcoin.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default App;

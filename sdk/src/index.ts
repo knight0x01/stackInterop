@@ -158,4 +158,85 @@ export class StackInteropSDK {
             functionArgs: [Cl.uint(targetTier)],
         };
     }
+
+    public buildToggleVerificationWindowOptions() {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "toggle-verification-window",
+            functionArgs: [],
+        };
+    }
+
+    public buildUpdateReputationOptions(user: string, newScore: number) {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "update-reputation",
+            functionArgs: [Cl.principal(user), Cl.uint(newScore)],
+        };
+    }
+
+    public buildManualTierAdjustmentOptions(user: string, newTier: number) {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "manual-tier-adjustment",
+            functionArgs: [Cl.principal(user), Cl.uint(newTier)],
+        };
+    }
+
+    public buildResetUserReputationOptions(user: string) {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "reset-user-reputation",
+            functionArgs: [Cl.principal(user)],
+        };
+    }
+
+    public buildPauseContractOptions() {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "pause-contract",
+            functionArgs: [],
+        };
+    }
+
+    public buildUnpauseContractOptions() {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "unpause-contract",
+            functionArgs: [],
+        };
+    }
+
+    public buildSetMaxIdentitiesOptions(limit: number) {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "set-max-identities",
+            functionArgs: [Cl.uint(limit)],
+        };
+    }
+
+    public buildSetVerificationCooldownOptions(duration: number) {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "set-verification-cooldown",
+            functionArgs: [Cl.uint(duration)],
+        };
+    }
+
+    public buildTransferOwnershipOptions(newOwner: string) {
+        return {
+            contractAddress: this.config.contractAddress,
+            contractName: this.config.contractName,
+            functionName: "transfer-ownership",
+            functionArgs: [Cl.principal(newOwner)],
+        };
+    }
 }
