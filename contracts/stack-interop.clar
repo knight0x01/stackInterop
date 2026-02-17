@@ -774,6 +774,12 @@
     )
 )
 
+;; @desc Checks if the caller has authority to reset a user's reputation.
+;; @returns bool: True if the caller is the contract owner.
+(define-private (can-reputation-be-reset)
+    (is-contract-owner tx-sender)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
