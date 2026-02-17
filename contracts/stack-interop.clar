@@ -427,6 +427,13 @@
     )
 )
 
+;; @desc Computes the SHA-256 hash of a Bitcoin public key.
+;; @param btc-pubkey: The raw public key buffer.
+;; @returns (buff 32): The SHA-256 hash output.
+(define-private (get-pubkey-hash256 (btc-pubkey (buff 65)))
+    (sha256 btc-pubkey)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
