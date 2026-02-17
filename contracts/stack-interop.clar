@@ -434,6 +434,13 @@
     (sha256 btc-pubkey)
 )
 
+;; @desc Derives the 20-byte Bitcoin address hash (H160) from a public key.
+;; @param btc-pubkey: The raw public key buffer.
+;; @returns (buff 20): The RIPEMD160(SHA256(pubkey)) hash.
+(define-private (get-btc-address-hash (btc-pubkey (buff 65)))
+    (hash160 btc-pubkey)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
