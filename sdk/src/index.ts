@@ -2,7 +2,8 @@ import {
     fetchCallReadOnlyFunction as callReadOnlyFunction,
     cvToValue,
     Cl,
-    ReadOnlyFunctionOptions
+    ReadOnlyFunctionOptions,
+    makeContractCall
 } from "@stacks/transactions";
 
 export const SDK_VERSION = "0.1.0";
