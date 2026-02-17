@@ -635,6 +635,16 @@
     (default-to u0 (get updated-at (map-get? identity-registry user)))
 )
 
+;; @desc Checks if a user is eligible to receive more reputation points.
+;; @param user: The principal to check.
+;; @returns bool: True if the user exists and score is not at max.
+(define-private (can-receive-reputation (user principal))
+    (and 
+        (is-principal-linked user)
+        (not (is-max-reputation user))
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
