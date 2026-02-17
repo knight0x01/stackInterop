@@ -92,6 +92,9 @@
         (btc-address-hash (hash160 btc-pubkey))
         (current-height block-height)
     )
+        ;; Ensure the registry is not paused
+        (asserts! (not (check-is-paused)) ERR-PAUSED)
+        
         ;; Check if already linked
         (asserts! (is-none (map-get? identity-registry caller)) ERR-ALREADY-LINKED)
         
