@@ -47,4 +47,10 @@ export class StackInteropSDK {
             senderAddress,
         };
     }
+
+    public async fetchReputation(userAddress: string): Promise<any> {
+        const options = this.getReadOnlyOptions("get-reputation", [Cl.principal(userAddress)], userAddress);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
