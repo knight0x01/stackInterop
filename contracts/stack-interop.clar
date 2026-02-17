@@ -522,6 +522,12 @@
     (>= (get-user-tier-internal user) min-tier)
 )
 
+;; @desc Checks if the registry has reached its maximum allowed capacity.
+;; @returns bool: True if current count matches or exceeds the limit.
+(define-private (is-registry-at-capacity)
+    (>= (var-get total-identities-count) (var-get max-identities-limit))
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
