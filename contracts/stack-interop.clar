@@ -387,6 +387,13 @@
     (var-get is-registry-paused)
 )
 
+;; @desc Extracts the first byte (prefix) of a Bitcoin public key.
+;; @param btc-pubkey: The raw public key buffer (33 or 65 bytes).
+;; @returns (buff 1): The first byte of the buffer.
+(define-private (get-pubkey-prefix (btc-pubkey (buff 65)))
+    (unwrap-panic (as-max-len? (slice? btc-pubkey u0 u1) u1))
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
