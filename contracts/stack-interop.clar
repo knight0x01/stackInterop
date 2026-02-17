@@ -245,6 +245,9 @@
         
         ;; Set the new owner
         (var-set contract-owner-var new-owner)
+        
+        ;; Record the action in the audit log
+        (log-admin-action "Transfer Ownership")
         (ok true)
     )
 )
