@@ -446,6 +446,21 @@
     )
 )
 
+;; @desc Calculates a new reputation score, ensuring it doesn't exceed the maximum.
+;; @param current-score: The current reputation score.
+;; @param increment: The amount to add.
+;; @returns uint: The new score capped at MAX-REPUTATION-SCORE.
+(define-private (calculate-new-reputation (current-score uint) (increment uint))
+    (let (
+        (new-score (+ current-score increment))
+    )
+        (if (> new-score MAX-REPUTATION-SCORE)
+            MAX-REPUTATION-SCORE
+            new-score
+        )
+    )
+)
+
 ;; @desc Computes the SHA-256 hash of a Bitcoin public key.
 ;; @param btc-pubkey: The raw public key buffer.
 ;; @returns (buff 32): The SHA-256 hash output.
