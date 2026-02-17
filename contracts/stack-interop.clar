@@ -815,6 +815,12 @@
     (is-eq (some btc-hash) (get btc-hash (map-get? identity-registry user)))
 )
 
+;; @desc Checks if the current transaction sender has a linked identity.
+;; @returns bool: True if tx-sender is in the registry.
+(define-private (is-tx-sender-linked)
+    (is-principal-linked tx-sender)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
