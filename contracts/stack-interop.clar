@@ -28,6 +28,13 @@
 ;; Error code u106: The contract is currently paused for maintenance
 (define-constant ERR-PAUSED (err u1006))
 
+;; Error code u107: The registry has reached its maximum allowed capacity
+(define-constant ERR-LIMIT-REACHED (err u1007))
+
+;; Scaling constants
+;; Default maximum number of identities allowed in the registry
+(define-constant DEFAULT-MAX-IDENTITIES u10000)
+
 ;; Data variables
 ;; Store the current contract owner principal
 (define-data-var contract-owner-var principal INITIAL-OWNER)
