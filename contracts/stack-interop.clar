@@ -494,6 +494,16 @@
     (<= height block-height)
 )
 
+;; @desc Calculates the difference between the current block height and a given height.
+;; @param past-height: The height to subtract from the current height.
+;; @returns uint: The block difference.
+(define-private (get-block-diff (past-height uint))
+    (if (<= past-height block-height)
+        (- block-height past-height)
+        u0
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
