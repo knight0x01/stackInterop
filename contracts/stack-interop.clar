@@ -46,6 +46,11 @@
 ;; Error code u108: Operation requested too soon after the last linking
 (define-constant ERR-COOLDOWN-ACTIVE (err u1008))
 
+;; Tier constants
+(define-constant TIER-0 u0) ;; Unverified or Basic
+(define-constant TIER-1 u1) ;; Verified Bitcoin Link
+(define-constant TIER-2 u2) ;; High Reputation / Premium
+
 ;; Data variables
 ;; Store the current contract owner principal
 (define-data-var contract-owner-var principal INITIAL-OWNER)
