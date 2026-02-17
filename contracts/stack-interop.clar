@@ -104,6 +104,9 @@
     )
         ;; Ensure the registry is not paused
         (asserts! (not (check-is-paused)) ERR-PAUSED)
+
+        ;; Ensure the registry capacity hasn't been exceeded
+        (asserts! (< (var-get total-identities-count) (var-get max-identities-limit)) ERR-LIMIT-REACHED)
         
         ;; Check if already linked
         (asserts! (is-none (map-get? identity-registry caller)) ERR-ALREADY-LINKED)
