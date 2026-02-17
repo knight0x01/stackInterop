@@ -138,6 +138,23 @@
     (ok CONTRACT-VERSION)
 )
 
+;; Administrative functions
+
+;; @desc Allows the current owner to transfer contract ownership.
+;; @param new-owner: The principal of the new owner.
+(define-public (transfer-ownership (new-owner principal))
+    (let (
+        (caller tx-sender)
+    )
+        ;; Only the current owner can transfer ownership
+        (asserts! (is-eq caller (var-get contract-owner-var)) ERR-NOT-OWNER)
+        
+        ;; Set the new owner
+        (var-set contract-owner-var new-owner)
+        (ok true)
+    )
+)
+
 ;; @desc Returns the total number of linked identities in the registry.
 (define-read-only (get-total-identities)
     (ok (var-get total-identities-count))
