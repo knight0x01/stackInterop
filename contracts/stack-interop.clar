@@ -863,6 +863,13 @@
     )
 )
 
+;; @desc Checks if the current sender has at least a specific amount of reputation.
+;; @param required-score: The score needed.
+;; @returns bool: True if current sender score >= required-score.
+(define-private (has-sufficient-sender-reputation (required-score uint))
+    (has-sufficient-reputation tx-sender required-score)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
