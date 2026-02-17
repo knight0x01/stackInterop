@@ -22,4 +22,8 @@ export class StackInteropSDK {
     public getContractIdentifier(): string {
         return `${this.config.contractAddress}.${this.config.contractName}`;
     }
+
+    public getNetwork(): string {
+        return this.config.network || "devnet";
+    }
 }
