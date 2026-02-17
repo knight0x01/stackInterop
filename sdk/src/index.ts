@@ -26,4 +26,8 @@ export class StackInteropSDK {
     public getNetwork(): string {
         return this.config.network || "devnet";
     }
+
+    public getConfig(): StackInteropConfig {
+        return { ...this.config };
+    }
 }
