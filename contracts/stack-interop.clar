@@ -53,8 +53,17 @@
 (define-constant HASH-LEN u32)
 
 ;; data maps
-;; Maps a Stacks principal to a Bitcoin address (stored as a buffer)
-(define-map identity-registry principal (buff 20))
+;; Maps a Stacks principal to a Bitcoin address and linking metadata.
+;; btc-hash: The 20-byte hash (H160) of the Bitcoin address.
+;; linked-at: The block height when the identity was first linked.
+;; updated-at: The block height of the last update to this identity.
+(define-map identity-registry principal 
+    { 
+        btc-hash: (buff 20), 
+        linked-at: uint, 
+        updated-at: uint 
+    }
+)
 
 ;; public functions
 
@@ -65,18 +74,24 @@
 (define-public (link-address (btc-pubkey (buff 33)) (signature (buff 65)) (message-hash (buff 32)))
     (let (
         (caller tx-sender)
-        ;; Derive the 20-byte hash (H160) from the public key (mock logic for now, real logic involves sha256 then ripemd160)
+        ;; Derive the 20-byte hash (H160) from the public key
         (btc-address-hash (hash160 btc-pubkey))
+        (current-height block-height)
     )
         ;; Check if already linked
         (asserts! (is-none (map-get? identity-registry caller)) ERR-ALREADY-LINKED)
         
         ;; Verify signature (mocking verification for initial structure)
-        ;; In a real scenario, secp256k1-verify would be used.
         ;; (asserts! (secp256k1-verify message-hash signature btc-pubkey) ERR-INVALID-SIGNATURE)
         
-        ;; Link the address
-        (map-set identity-registry caller btc-address-hash)
+        ;; Link the address with metadata
+        (map-set identity-registry caller 
+            { 
+                btc-hash: btc-address-hash, 
+                linked-at: current-height, 
+                updated-at: current-height 
+            }
+        )
         (ok true)
     )
 )
