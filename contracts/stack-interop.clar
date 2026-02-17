@@ -256,6 +256,15 @@
 
 ;; private functions
 
+;; @desc Checks if the user is still within their verification cooldown period.
+;; @param user: The principal to check.
+(define-private (check-cooldown (user principal))
+    (match (map-get? identity-registry user)
+        identity (>= block-height (+ (get updated-at identity) (var-get verification-cooldown-limit)))
+        true ;; If no identity exists, cooldown is not applicable
+    )
+)
+
 ;; @desc Helper to check if the contract is in a paused state.
 ;; @returns bool: True if paused, false otherwise.
 (define-private (check-is-paused)
