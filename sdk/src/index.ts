@@ -53,4 +53,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchUserTier(userAddress: string): Promise<any> {
+        const options = this.getReadOnlyOptions("get-user-tier", [Cl.principal(userAddress)], userAddress);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
