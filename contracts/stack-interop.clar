@@ -683,6 +683,23 @@
     )
 )
 
+;; @desc Returns a numeric level based on the user's reputation score.
+;; @param user: The principal to check.
+;; @returns uint: 0 (Basic), 1 (Bronze), 2 (Silver), 3 (Gold).
+(define-private (get-reputation-level (user principal))
+    (let (
+        (score (get-user-reputation-internal user))
+    )
+        (if (>= score u500) u3
+            (if (>= score u250) u2
+                (if (>= score u100) u1
+                    u0
+                )
+            )
+        )
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
