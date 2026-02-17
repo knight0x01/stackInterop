@@ -39,6 +39,13 @@
 ;; Initial reputation score given to newly linked identities
 (define-constant DEFAULT-REPUTATION-SCORE u10)
 
+;; Timing constants
+;; Number of blocks to wait before a user can re-verify or update their identity
+(define-constant DEFAULT-VERIFICATION-COOLDOWN u144) ;; ~24 hours on Bitcoin timing
+
+;; Error code u108: Operation requested too soon after the last linking
+(define-constant ERR-COOLDOWN-ACTIVE (err u1008))
+
 ;; Data variables
 ;; Store the current contract owner principal
 (define-data-var contract-owner-var principal INITIAL-OWNER)
