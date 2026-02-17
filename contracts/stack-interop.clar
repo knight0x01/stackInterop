@@ -164,6 +164,14 @@
                 last-updated: current-height 
             }
         )
+
+        ;; Initialize identity tier to Tier 1 upon successful linking
+        (map-set identity-tiers caller 
+            { 
+                tier: TIER-1, 
+                granted-at: current-height 
+            }
+        )
         
         (ok true)
     )
