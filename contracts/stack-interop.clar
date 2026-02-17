@@ -191,6 +191,19 @@
     )
 )
 
+;; @desc Updates the maximum number of identities allowed.
+;; @param new-limit: The new capacity for the registry.
+(define-public (set-max-identities (new-limit uint))
+    (begin
+        ;; Only the owner can scale the registry
+        (asserts! (is-eq tx-sender (var-get contract-owner-var)) ERR-NOT-OWNER)
+        
+        ;; Update the limit
+        (var-set max-identities-limit new-limit)
+        (ok true)
+    )
+)
+
 ;; private functions
 
 ;; @desc Helper to check if the contract is in a paused state.
