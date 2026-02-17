@@ -435,6 +435,13 @@
     (is-eq (len btc-pubkey) PUBKEY-COMPRESSED-LEN)
 )
 
+;; @desc Checks if the provided public key is in uncompressed format (65 bytes).
+;; @param btc-pubkey: The raw public key buffer.
+;; @returns bool: True if uncompressed, false otherwise.
+(define-private (is-uncompressed-pubkey (btc-pubkey (buff 65)))
+    (is-eq (len btc-pubkey) PUBKEY-UNCOMPRESSED-LEN)
+)
+
 ;; @desc Validates the Bitcoin public key prefix byte.
 ;; @param btc-pubkey: The raw public key buffer.
 ;; @returns bool: True if the prefix is valid for the given format.
