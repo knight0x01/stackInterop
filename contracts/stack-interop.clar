@@ -141,6 +141,14 @@
 
         ;; Record global registry update height
         (var-set last-registry-update-height current-height)
+
+        ;; Initialize reputation score for the new identity
+        (map-set identity-reputation caller 
+            { 
+                score: DEFAULT-REPUTATION-SCORE, 
+                last-updated: current-height 
+            }
+        )
         
         (ok true)
     )
