@@ -29,6 +29,16 @@
 ;; Store the current contract owner principal
 (define-data-var contract-owner-var principal INITIAL-OWNER)
 
+;; Metadata constants
+;; The semantic version of the contract
+(define-constant CONTRACT-VERSION "0.1.0")
+
+;; The descriptive name of the identity registry
+(define-constant REGISTRY-NAME "StackInterop Identity Layer")
+
+;; The network identifier (mocking for interoperability experiments)
+(define-constant NETWORK-ID "stacks-mainnet")
+
 ;; data maps
 ;; Maps a Stacks principal to a Bitcoin address (stored as a buffer)
 (define-map identity-registry principal (buff 20))
