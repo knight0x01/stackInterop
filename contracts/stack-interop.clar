@@ -877,6 +877,22 @@
     (is-tier-upgrade-allowed tx-sender target-tier)
 )
 
+;; @desc Returns the formatted name of the current sender's reputation level.
+;; @returns (response (string-ascii 12) uint): The level name or basic if not registered.
+(define-private (get-formatted-sender-reputation-level)
+    (let (
+        (level (get-reputation-level tx-sender))
+    )
+        (if (is-eq level LEVEL-GOLD) (ok "Gold")
+            (if (is-eq level LEVEL-SILVER) (ok "Silver")
+                (if (is-eq level LEVEL-BRONZE) (ok "Bronze")
+                    (ok "Basic")
+                )
+            )
+        )
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
