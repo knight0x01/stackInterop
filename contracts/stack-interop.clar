@@ -412,6 +412,21 @@
     (is-eq (len btc-pubkey) PUBKEY-COMPRESSED-LEN)
 )
 
+;; @desc Validates the Bitcoin public key prefix byte.
+;; @param btc-pubkey: The raw public key buffer.
+;; @returns bool: True if the prefix is valid for the given format.
+(define-private (is-valid-pubkey-prefix (btc-pubkey (buff 65)))
+    (let (
+        (prefix (get-pubkey-prefix btc-pubkey))
+        (is-compressed (is-compressed-pubkey btc-pubkey))
+    )
+        (if is-compressed
+            (or (is-eq prefix 0x02) (is-eq prefix 0x03))
+            (is-eq prefix 0x04)
+        )
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
