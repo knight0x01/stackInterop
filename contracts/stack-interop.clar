@@ -17,6 +17,18 @@
 ;; Error code u104: The message hash length or format is incorrect
 (define-constant ERR-INVALID-MESSAGE-HASH (err u104))
 
+;; Administrative constants
+;; The initial owner of the contract is the principal that deploys it.
+(define-constant INITIAL-OWNER tx-sender)
+
+;; Access control constants
+;; Error code u105: The operation requires contract owner privileges
+(define-constant ERR-NOT-OWNER (err u105))
+
+;; Data variables
+;; Store the current contract owner principal
+(define-data-var contract-owner-var principal INITIAL-OWNER)
+
 ;; data maps
 ;; Maps a Stacks principal to a Bitcoin address (stored as a buffer)
 (define-map identity-registry principal (buff 20))
