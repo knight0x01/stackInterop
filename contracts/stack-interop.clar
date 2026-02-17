@@ -691,15 +691,15 @@
 
 ;; @desc Returns a numeric level based on the user's reputation score.
 ;; @param user: The principal to check.
-;; @returns uint: 0 (Basic), 1 (Bronze), 2 (Silver), 3 (Gold).
+;; @returns uint: The reputation level constant.
 (define-private (get-reputation-level (user principal))
     (let (
         (score (get-user-reputation-internal user))
     )
-        (if (>= score u500) u3
-            (if (>= score u250) u2
-                (if (>= score u100) u1
-                    u0
+        (if (>= score u500) LEVEL-GOLD
+            (if (>= score u250) LEVEL-SILVER
+                (if (>= score u100) LEVEL-BRONZE
+                    LEVEL-BASIC
                 )
             )
         )
