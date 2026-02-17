@@ -663,6 +663,16 @@
     (> (get-block-diff (get-verification-height user)) STALE-IDENTITY-THRESHOLD)
 )
 
+;; @desc Checks if an identity is eligible for renewal (either stale or cooldown passed).
+;; @param user: The principal to check.
+;; @returns bool: True if renewal is allowed.
+(define-private (is-identity-renewable (user principal))
+    (or 
+        (check-cooldown user)
+        (is-identity-stale user)
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
