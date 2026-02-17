@@ -455,6 +455,17 @@
     (is-eq (len message-hash) HASH-LEN)
 )
 
+;; @desc Placeholder for actual SECP256K1 signature verification.
+;; @param message-hash: 32-byte hash of the message.
+;; @param signature: 65-byte recovery signature.
+;; @param btc-pubkey: 33/65-byte public key.
+;; @returns bool: Result of the verification (currently mock true).
+(define-private (verify-sig (message-hash (buff 32)) (signature (buff 65)) (btc-pubkey (buff 65)))
+    ;; In a real implementation, we would use secp256k1-verify
+    ;; For now, we assume the signature is valid if other checks pass
+    true
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
