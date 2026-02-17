@@ -345,3 +345,8 @@
 (define-read-only (get-reputation (user principal))
     (map-get? identity-reputation user)
 )
+
+;; @desc Returns the current verification tier for a given user.
+(define-read-only (get-user-tier (user principal))
+    (map-get? identity-tiers user)
+)
