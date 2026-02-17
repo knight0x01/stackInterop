@@ -23,7 +23,10 @@
 
 ;; Access control constants
 ;; Error code u105: The operation requires contract owner privileges
-(define-constant ERR-NOT-OWNER (err u105))
+(define-constant ERR-NOT-OWNER (err u1005))
+
+;; Error code u106: The contract is currently paused for maintenance
+(define-constant ERR-PAUSED (err u1006))
 
 ;; Data variables
 ;; Store the current contract owner principal
@@ -155,6 +158,19 @@
         
         ;; Set the new owner
         (var-set contract-owner-var new-owner)
+        (ok true)
+    )
+)
+
+;; @desc Emergency function to pause or unpause the registry.
+;; @param paused: The new paused state (bool).
+(define-public (set-registry-pause (paused bool))
+    (begin
+        ;; Only the owner can toggle the pause state
+        (asserts! (is-eq tx-sender (var-get contract-owner-var)) ERR-NOT-OWNER)
+        
+        ;; Update the pause state
+        (var-set is-registry-paused paused)
         (ok true)
     )
 )
