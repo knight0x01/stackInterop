@@ -750,6 +750,13 @@
     (get-block-diff (get-verification-height user))
 )
 
+;; @desc Checks if the user's verification is considered current (e.g. within 1440 blocks).
+;; @param user: The principal to check.
+;; @returns bool: True if age is <= 1440 blocks (~10 days on Bitcoin timing).
+(define-private (is-verification-current (user principal))
+    (<= (get-verification-age user) u1440)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
