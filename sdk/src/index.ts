@@ -95,4 +95,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchMaxIdentities(): Promise<number> {
+        const options = this.getReadOnlyOptions("get-max-identities", [], DEFAULT_CONTRACT_ADDRESS);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
