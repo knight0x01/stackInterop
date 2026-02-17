@@ -743,6 +743,13 @@
     )
 )
 
+;; @desc Calculates the age of the current verification (blocks since last update).
+;; @param user: The principal to check.
+;; @returns uint: The block difference.
+(define-private (get-verification-age (user principal))
+    (get-block-diff (get-verification-height user))
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
