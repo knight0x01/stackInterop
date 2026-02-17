@@ -807,6 +807,14 @@
     false
 )
 
+;; @desc Validates if a provided Bitcoin address hash matches the user's registered link.
+;; @param user: The principal to check.
+;; @param btc-hash: The 20-byte hash to validate.
+;; @returns bool: True if the hash matches the registry entry.
+(define-private (is-valid-btc-address-link (user principal) (btc-hash (buff 20)))
+    (is-eq (some btc-hash) (get btc-hash (map-get? identity-registry user)))
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
