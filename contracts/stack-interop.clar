@@ -399,6 +399,91 @@
     )
 )
 
+;; @desc Refreshes an identity's update height if the cooldown has passed.
+;; @returns (response bool uint): Returns true on success.
+(define-public (renew-identity)
+    (let (
+        (caller tx-sender)
+    )
+        (asserts! (can-sender-update-identity caller) ERR-COOLDOWN-ACTIVE)
+        (map-set identity-registry caller 
+            (merge (unwrap! (map-get? identity-registry caller) ERR-NOT-AUTHORIZED) 
+                { updated-at: block-height }
+            )
+        )
+        (log-admin-action "Renew Identity")
+        (ok true)
+    )
+)
+
+;; @desc Upgrades the transaction sender to a new tier if eligible.
+;; @param target-tier: The tier to advance to.
+(define-public (advance-tier (target-tier uint))
+    (let (
+        (caller tx-sender)
+    )
+        (asserts! (is-sender-eligible-for-tier-upgrade target-tier) ERR-NOT-AUTHORIZED)
+        (map-set identity-tiers caller 
+            { 
+                tier: target-tier, 
+                granted-at: block-height 
+            }
+        )
+        (log-admin-action "Advance Tier")
+        (ok true)
+    )
+)
+
+;; @desc Claims a reputation boost based on periodic activity (mocked).
+(define-public (claim-reputation-boost)
+    (let (
+        (caller tx-sender)
+        (current-reputation (get-user-reputation-internal caller))
+    )
+        (asserts! (can-sender-receive-reputation) ERR-NOT-AUTHORIZED)
+        (map-set identity-reputation caller 
+            { 
+                score: (calculate-new-reputation current-reputation REPUTATION-STEP), 
+                last-updated: block-height 
+            }
+        )
+        (log-admin-action "Claim Reputation Boost")
+        (ok true)
+    )
+)
+
+;; @desc Administrator function to grant reputation to a user (owner only).
+(define-public (grant-verified-reputation (user principal) (amount uint))
+    (begin
+        (asserts! (is-sender-contract-owner) ERR-NOT-OWNER)
+        (let (
+            (current-reputation (get-user-reputation-internal user))
+        )
+            (map-set identity-reputation user 
+                { 
+                    score: (calculate-new-reputation current-reputation amount), 
+                    last-updated: block-height 
+                }
+            )
+            (log-admin-action "Grant Verified Reputation")
+            (ok true)
+        )
+    )
+)
+
+;; @desc Administrator function to revoke an identity (owner only).
+(define-public (revoke-identity (user principal))
+    (begin
+        (asserts! (is-sender-contract-owner) ERR-NOT-OWNER)
+        (map-delete identity-registry user)
+        (map-delete identity-tiers user)
+        (map-delete identity-reputation user)
+        (var-set total-identities-count (- (var-get total-identities-count) u1))
+        (log-admin-action "Revoke Identity")
+        (ok true)
+    )
+)
+
 ;; private functions
 
 ;; @desc Checks if the user is still within their verification cooldown period.
@@ -899,6 +984,46 @@
     )
 )
 
+;; @desc Checks if the transaction sender's Bitcoin address is already verified.
+;; @returns bool: True if the sender has a linked address.
+(define-private (is-sender-address-verified)
+    (is-address-verified tx-sender)
+)
+
+;; @desc Checks if the transaction sender is eligible to receive more reputation.
+;; @returns bool: True if sender is linked and not at max reputation.
+(define-private (can-sender-receive-reputation)
+    (can-receive-reputation tx-sender)
+)
+
+;; @desc Checks if an identity is ready for re-verification (bypass cooldown if old).
+;; @param user: The principal to check.
+;; @returns bool: True if cooldown passed OR identity age > COOLDOWN-BYPASS-THRESHOLD.
+(define-private (is-identity-ready-for-re-verification (user principal))
+    (or 
+        (check-cooldown user)
+        (> (get-verification-age user) COOLDOWN-BYPASS-THRESHOLD)
+    )
+)
+
+;; @desc Returns the last known reputation level of a user.
+;; @param user: The principal to check.
+;; @returns uint: The level constant.
+(define-private (get-user-last-active-reputation-level (user principal))
+    (get-reputation-level user)
+)
+
+;; @desc Checks if a user's reputation is currently protected from certain actions.
+;; @param user: The principal to check.
+;; @returns bool: True if the user is at Silver or Gold level.
+(define-private (is-user-reputation-protected (user principal))
+    (let (
+        (level (get-reputation-level user))
+    )
+        (or (is-eq level LEVEL-SILVER) (is-eq level LEVEL-GOLD))
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
@@ -966,4 +1091,28 @@
 ;; @desc Returns the current verification tier for a given user.
 (define-read-only (get-user-tier (user principal))
     (map-get? identity-tiers user)
+)
+
+;; @desc Checks if an identity is valid (registered and not stale).
+(define-read-only (is-identity-valid (user principal))
+    (ok (and 
+        (is-principal-linked user)
+        (not (is-identity-stale user))
+    ))
+)
+
+;; @desc Returns a compact summary of a user's identity data.
+(define-read-only (get-compact-identity-data (user principal))
+    (let (
+        (identity (map-get? identity-registry user))
+        (reputation (map-get? identity-reputation user))
+        (tier (map-get? identity-tiers user))
+    )
+        (ok {
+            linked: (is-some identity),
+            tier: (default-to u0 (get tier tier)),
+            score: (default-to u0 (get score reputation)),
+            stale: (if (is-some identity) (is-identity-stale user) true)
+        })
+    )
 )
