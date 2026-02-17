@@ -261,6 +261,9 @@
         
         ;; Update the pause state
         (var-set is-registry-paused paused)
+
+        ;; Record the action in the audit log
+        (log-admin-action "Toggle Registry Pause")
         (ok true)
     )
 )
