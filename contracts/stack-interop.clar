@@ -102,3 +102,24 @@
 (define-read-only (get-identity (user principal))
     (map-get? identity-registry user)
 )
+
+;; @desc Returns the Bitcoin address hash (H160) for a given user.
+(define-read-only (get-btc-hash (user principal))
+    (match (map-get? identity-registry user)
+        identity (ok (get btc-hash identity))
+        (err ERR-NOT-AUTHORIZED) ;; Using a simple error for missing data
+    )
+)
+
+;; @desc Returns the block height when the user's identity was first linked.
+(define-read-only (get-linked-at (user principal))
+    (match (map-get? identity-registry user)
+        identity (ok (get linked-at identity))
+        (err ERR-NOT-AUTHORIZED)
+    )
+)
+
+;; @desc Returns the descriptive version of the registry.
+(define-read-only (get-version)
+    (ok CONTRACT-VERSION)
+)
