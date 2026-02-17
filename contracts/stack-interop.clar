@@ -137,3 +137,13 @@
 (define-read-only (get-version)
     (ok CONTRACT-VERSION)
 )
+
+;; @desc Returns the total number of linked identities in the registry.
+(define-read-only (get-total-identities)
+    (ok (var-get total-identities-count))
+)
+
+;; @desc Returns the block height of the most recent registry update.
+(define-read-only (get-last-update-height)
+    (ok (var-get last-registry-update-height))
+)
