@@ -64,6 +64,9 @@
 ;; Maximum number of identities allowed in the registry
 (define-data-var max-identities-limit uint DEFAULT-MAX-IDENTITIES)
 
+;; Cooldown period for identity operations (in blocks)
+(define-data-var verification-cooldown-limit uint DEFAULT-VERIFICATION-COOLDOWN)
+
 ;; Metadata constants
 ;; The semantic version of the contract
 (define-constant CONTRACT-VERSION "0.1.0")
