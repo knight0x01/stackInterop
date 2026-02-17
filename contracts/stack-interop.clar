@@ -58,6 +58,12 @@
 ;; Maximum possible reputation score
 (define-constant MAX-REPUTATION-SCORE u1000)
 
+;; Reputation levels
+(define-constant LEVEL-BASIC u0)
+(define-constant LEVEL-BRONZE u1)
+(define-constant LEVEL-SILVER u2)
+(define-constant LEVEL-GOLD u3)
+
 ;; Timing constants
 ;; Number of blocks to wait before a user can re-verify or update their identity
 (define-constant DEFAULT-VERIFICATION-COOLDOWN u144) ;; ~24 hours on Bitcoin timing
