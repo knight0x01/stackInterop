@@ -159,6 +159,14 @@
     )
 )
 
+;; private functions
+
+;; @desc Helper to check if the contract is in a paused state.
+;; @returns bool: True if paused, false otherwise.
+(define-private (check-is-paused)
+    (var-get is-registry-paused)
+)
+
 ;; @desc Returns the total number of linked identities in the registry.
 (define-read-only (get-total-identities)
     (ok (var-get total-identities-count))
