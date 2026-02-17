@@ -545,6 +545,23 @@
     (is-eq caller (var-get contract-owner-var))
 )
 
+;; @desc Calculates the remaining blocks until the cooldown expires for a user.
+;; @param user: The principal to check.
+;; @returns uint: The number of blocks remaining, or 0 if expired.
+(define-private (calculate-cooldown-remaining (user principal))
+    (match (map-get? identity-registry user)
+        identity (let (
+            (expiry (+ (get updated-at identity) (var-get verification-cooldown-limit)))
+        )
+            (if (> expiry block-height)
+                (- expiry block-height)
+                u0
+            )
+        )
+        u0
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
