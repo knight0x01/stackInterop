@@ -83,4 +83,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchTotalIdentities(): Promise<number> {
+        const options = this.getReadOnlyOptions("get-total-identities", [], DEFAULT_CONTRACT_ADDRESS);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
