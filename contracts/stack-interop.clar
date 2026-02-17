@@ -701,9 +701,9 @@
     (let (
         (score (get-user-reputation-internal user))
     )
-        (if (>= score u500) LEVEL-GOLD
-            (if (>= score u250) LEVEL-SILVER
-                (if (>= score u100) LEVEL-BRONZE
+        (if (>= score REPUTATION-GOLD-MIN) LEVEL-GOLD
+            (if (>= score REPUTATION-SILVER-MIN) LEVEL-SILVER
+                (if (>= score REPUTATION-BRONZE-MIN) LEVEL-BRONZE
                     LEVEL-BASIC
                 )
             )
@@ -713,23 +713,23 @@
 
 ;; @desc Checks if a user is eligible for Gold reputation level.
 ;; @param user: The principal to check.
-;; @returns bool: True if score >= 500.
+;; @returns bool: True if score >= REPUTATION-GOLD-MIN.
 (define-private (is-eligible-for-gold (user principal))
-    (>= (get-user-reputation-internal user) u500)
+    (>= (get-user-reputation-internal user) REPUTATION-GOLD-MIN)
 )
 
 ;; @desc Checks if a user is eligible for Silver reputation level.
 ;; @param user: The principal to check.
-;; @returns bool: True if score >= 250.
+;; @returns bool: True if score >= REPUTATION-SILVER-MIN.
 (define-private (is-eligible-for-silver (user principal))
-    (>= (get-user-reputation-internal user) u250)
+    (>= (get-user-reputation-internal user) REPUTATION-SILVER-MIN)
 )
 
 ;; @desc Checks if a user is eligible for Bronze reputation level.
 ;; @param user: The principal to check.
-;; @returns bool: True if score >= 100.
+;; @returns bool: True if score >= REPUTATION-BRONZE-MIN.
 (define-private (is-eligible-for-bronze (user principal))
-    (>= (get-user-reputation-internal user) u100)
+    (>= (get-user-reputation-internal user) REPUTATION-BRONZE-MIN)
 )
 
 ;; @desc Records an administrative action to the audit log.
