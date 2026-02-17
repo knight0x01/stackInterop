@@ -65,6 +65,9 @@
 ;; Error code u108: Operation requested too soon after the last linking
 (define-constant ERR-COOLDOWN-ACTIVE (err u1008))
 
+;; Staleness threshold (in blocks)
+(define-constant STALE-IDENTITY-THRESHOLD u10000)
+
 ;; Tier constants
 (define-constant TIER-0 u0) ;; Unverified or Basic
 (define-constant TIER-1 u1) ;; Verified Bitcoin Link
