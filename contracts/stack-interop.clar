@@ -480,6 +480,13 @@
     (default-to u0 (get score (map-get? identity-reputation user)))
 )
 
+;; @desc Internal helper to get a user's verification tier with a default fallback.
+;; @param user: The principal of the user.
+;; @returns uint: The current tier or TIER-0 if not found.
+(define-private (get-user-tier-internal (user principal))
+    (default-to TIER-0 (get tier (map-get? identity-tiers user)))
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
