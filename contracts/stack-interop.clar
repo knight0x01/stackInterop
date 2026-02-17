@@ -764,6 +764,16 @@
     (> height block-height)
 )
 
+;; @desc Checks if the current state allows transferring an identity.
+;; @param user: The principal currently owning the identity.
+;; @returns bool: True if not paused and the caller is authorized.
+(define-private (is-identity-transferable (user principal))
+    (and 
+        (not (check-is-paused))
+        (is-owner-or-self user)
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
