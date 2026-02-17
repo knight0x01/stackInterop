@@ -780,6 +780,13 @@
     (is-contract-owner tx-sender)
 )
 
+;; @desc Checks if a user is currently eligible for a tier downgrade (placeholder).
+;; @param user: The principal to check.
+;; @returns bool: Currently returns false as downgrades are not yet implemented.
+(define-private (is-tier-downgrade-eligible (user principal))
+    false
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
