@@ -29,6 +29,13 @@
 ;; Store the current contract owner principal
 (define-data-var contract-owner-var principal INITIAL-OWNER)
 
+;; Identity tracking variables
+;; Total number of identities linked in the registry
+(define-data-var total-identities-count uint u0)
+
+;; Last updated block height for the entire registry
+(define-data-var last-registry-update-height uint u0)
+
 ;; Metadata constants
 ;; The semantic version of the contract
 (define-constant CONTRACT-VERSION "0.1.0")
