@@ -628,6 +628,13 @@
     (is-some (get btc-hash (map-get? identity-registry user)))
 )
 
+;; @desc Retrieves the block height at which the user was last verified.
+;; @param user: The principal to check.
+;; @returns uint: The block height or 0 if not found.
+(define-private (get-verification-height (user principal))
+    (default-to u0 (get updated-at (map-get? identity-registry user)))
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
