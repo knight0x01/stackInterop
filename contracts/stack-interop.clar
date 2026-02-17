@@ -52,6 +52,9 @@
 ;; Threshold for considering a user as having "high reputation"
 (define-constant HIGH-REPUTATION-THRESHOLD u100)
 
+;; Standard increment for reputation points
+(define-constant REPUTATION-INCREMENT-STEP u5)
+
 ;; Maximum possible reputation score
 (define-constant MAX-REPUTATION-SCORE u1000)
 
