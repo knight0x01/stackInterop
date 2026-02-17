@@ -433,6 +433,16 @@
     )
 )
 
+;; @desc Calculates how many blocks have passed since the identity was first linked.
+;; @param user: The principal to check.
+;; @returns uint: The number of blocks since linked-at.
+(define-private (get-identity-age (user principal))
+    (match (map-get? identity-registry user)
+        identity (get-block-diff (get linked-at identity))
+        u0
+    )
+)
+
 ;; @desc Computes the SHA-256 hash of a Bitcoin public key.
 ;; @param btc-pubkey: The raw public key buffer.
 ;; @returns (buff 32): The SHA-256 hash output.
