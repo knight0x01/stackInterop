@@ -528,6 +528,16 @@
     (>= (var-get total-identities-count) (var-get max-identities-limit))
 )
 
+;; @desc Checks if a user is currently allowed to update their identity.
+;; @param user: The principal to check.
+;; @returns bool: True if not paused and cooldown has passed.
+(define-private (can-update-identity (user principal))
+    (and 
+        (not (check-is-paused))
+        (check-cooldown user)
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
