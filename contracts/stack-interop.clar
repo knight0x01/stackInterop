@@ -89,6 +89,15 @@
     }
 )
 
+;; Maps a Stacks principal to their calculated reputation score.
+;; The score is used to determine privileges in the ecosystem.
+(define-map identity-reputation principal 
+    { 
+        score: uint, 
+        last-updated: uint 
+    }
+)
+
 ;; public functions
 
 ;; @desc Links a Stacks principal to a Bitcoin address by providing a public key and signature.
