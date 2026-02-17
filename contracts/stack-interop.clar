@@ -870,6 +870,13 @@
     (has-sufficient-reputation tx-sender required-score)
 )
 
+;; @desc Checks if the current sender is eligible for a specific tier upgrade.
+;; @param target-tier: The tier they want to reach.
+;; @returns bool: True if current sender meets the reputation requirement for the tier.
+(define-private (is-sender-eligible-for-tier-upgrade (target-tier uint))
+    (is-tier-upgrade-allowed tx-sender target-tier)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
