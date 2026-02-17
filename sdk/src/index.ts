@@ -107,4 +107,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchVerificationWindowStatus(): Promise<boolean> {
+        const options = this.getReadOnlyOptions("get-verification-window-status", [], DEFAULT_CONTRACT_ADDRESS);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
