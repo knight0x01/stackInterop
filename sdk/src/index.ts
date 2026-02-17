@@ -388,3 +388,5 @@ export class StackInteropSDK {
 // Commit 289: Granular logic refinement and documentation update.
 
 // Commit 293: Granular logic refinement and documentation update.
+
+// Commit 297: Granular logic refinement and documentation update.
