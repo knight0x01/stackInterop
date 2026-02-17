@@ -309,6 +309,9 @@
         
         ;; Update the status
         (var-set verification-window-open status)
+
+        ;; Record the action in the audit log
+        (log-admin-action "Toggle Verification Window Status")
         (ok true)
     )
 )
