@@ -101,4 +101,10 @@ export class StackInteropSDK {
         const result = await callReadOnlyFunction(options);
         return cvToValue(result);
     }
+
+    public async fetchVerificationCooldown(): Promise<number> {
+        const options = this.getReadOnlyOptions("get-verification-cooldown", [], DEFAULT_CONTRACT_ADDRESS);
+        const result = await callReadOnlyFunction(options);
+        return cvToValue(result);
+    }
 }
