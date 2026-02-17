@@ -853,6 +853,16 @@
     (is-owner-or-self user)
 )
 
+;; @desc Comprehensive check to determine if the sender can update an identity.
+;; @param user: The principal owner of the identity.
+;; @returns bool: True if authorized, not paused, and cooldown passed.
+(define-private (can-sender-update-identity (user principal))
+    (and 
+        (is-sender-authorized-updater user)
+        (can-update-identity user)
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
