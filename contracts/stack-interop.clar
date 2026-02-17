@@ -120,6 +120,21 @@
     }
 )
 
+;; Maps an index to administrative actions for auditing purposes.
+;; action: A descriptive string of the action taken.
+;; caller: The principal who performed the action.
+;; height: The block height of the action.
+(define-map admin-audit-log uint 
+    { 
+        action: (string-ascii 64), 
+        caller: principal, 
+        height: uint 
+    }
+)
+
+;; Counter for audit log entries
+(define-data-var audit-log-index uint u0)
+
 ;; Maps a Stacks principal to their calculated reputation score.
 ;; The score is used to determine privileges in the ecosystem.
 (define-map identity-reputation principal 
