@@ -846,6 +846,13 @@
     (is-contract-owner tx-sender)
 )
 
+;; @desc Checks if the current sender is authorized to update a specific identity.
+;; @param user: The principal owner of the identity.
+;; @returns bool: True if sender is owner or the user themselves.
+(define-private (is-sender-authorized-updater (user principal))
+    (is-owner-or-self user)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
