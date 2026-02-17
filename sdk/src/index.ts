@@ -45,6 +45,7 @@ export class StackInteropSDK {
             functionName,
             functionArgs,
             senderAddress,
+            network: this.config.network || "devnet",
         };
     }
 
