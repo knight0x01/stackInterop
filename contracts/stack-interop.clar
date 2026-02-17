@@ -332,6 +332,24 @@
     (var-get is-registry-paused)
 )
 
+;; @desc Records an administrative action to the audit log.
+;; @param action: Descriptive text of the action.
+(define-private (log-admin-action (action (string-ascii 64)))
+    (let (
+        (current-index (var-get audit-log-index))
+    )
+        (map-set admin-audit-log current-index 
+            { 
+                action: action, 
+                caller: tx-sender, 
+                height: block-height 
+            }
+        )
+        (var-set audit-log-index (+ current-index u1))
+        true
+    )
+)
+
 ;; @desc Returns the total number of linked identities in the registry.
 (define-read-only (get-total-identities)
     (ok (var-get total-identities-count))
