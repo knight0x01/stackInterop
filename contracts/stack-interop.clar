@@ -425,6 +425,17 @@
     (ok (var-get verification-window-open))
 )
 
+;; @desc Retrieves a specific entry from the administrative audit log.
+;; @param index: The index of the audit log entry.
+(define-read-only (get-audit-log-entry (index uint))
+    (map-get? admin-audit-log index)
+)
+
+;; @desc Returns the current index for the next audit log entry.
+(define-read-only (get-audit-log-index)
+    (ok (var-get audit-log-index))
+)
+
 ;; @desc Returns the reputation score and last update for a given user.
 (define-read-only (get-reputation (user principal))
     (map-get? identity-reputation user)
