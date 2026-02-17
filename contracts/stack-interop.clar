@@ -673,6 +673,16 @@
     )
 )
 
+;; @desc Checks if the caller is either the contract owner or the user themselves.
+;; @param user: The principal to check against.
+;; @returns bool: True if authorized.
+(define-private (is-owner-or-self (user principal))
+    (or 
+        (is-contract-owner tx-sender)
+        (is-eq tx-sender user)
+    )
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
