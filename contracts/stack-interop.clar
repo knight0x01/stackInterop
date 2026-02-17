@@ -293,6 +293,9 @@
         
         ;; Update the cooldown
         (var-set verification-cooldown-limit new-cooldown)
+
+        ;; Record the action in the audit log
+        (log-admin-action "Update Verification Cooldown")
         (ok true)
     )
 )
