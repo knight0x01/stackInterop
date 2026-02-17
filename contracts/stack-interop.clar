@@ -280,6 +280,25 @@
     )
 )
 
+;; @desc Upgrades or modifies the verification tier for a specific user.
+;; @param user: The principal of the user.
+;; @param new-tier: The new tier level.
+(define-public (set-tier (user principal) (new-tier uint))
+    (begin
+        ;; Only the owner can manually set tiers
+        (asserts! (is-eq tx-sender (var-get contract-owner-var)) ERR-NOT-OWNER)
+        
+        ;; Update the tier mapping
+        (map-set identity-tiers user 
+            { 
+                tier: new-tier, 
+                granted-at: block-height 
+            }
+        )
+        (ok true)
+    )
+)
+
 ;; private functions
 
 ;; @desc Checks if the user is still within their verification cooldown period.
