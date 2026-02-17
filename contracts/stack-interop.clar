@@ -645,6 +645,14 @@
     )
 )
 
+;; @desc Checks if a user has at least a specific amount of reputation.
+;; @param user: The principal to check.
+;; @param required-score: The score needed.
+;; @returns bool: True if current score >= required-score.
+(define-private (has-sufficient-reputation (user principal) (required-score uint))
+    (>= (get-user-reputation-internal user) required-score)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
