@@ -487,6 +487,13 @@
     (default-to TIER-0 (get tier (map-get? identity-tiers user)))
 )
 
+;; @desc Checks if a provided block height is within a reasonable range (not in the future).
+;; @param height: The block height to validate.
+;; @returns bool: True if the height is valid.
+(define-private (is-height-valid (height uint))
+    (<= height block-height)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
