@@ -833,6 +833,13 @@
     (get-user-tier-internal tx-sender)
 )
 
+;; @desc Checks if the current transaction sender meets a minimum tier requirement.
+;; @param min-tier: The minimum tier to check against.
+;; @returns bool: True if current sender tier >= min-tier.
+(define-private (is-sender-in-tier (min-tier uint))
+    (is-in-tier tx-sender min-tier)
+)
+
 ;; @desc Records an administrative action to the audit log.
 ;; @param action: Descriptive text of the action.
 (define-private (log-admin-action (action (string-ascii 64)))
